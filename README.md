@@ -8,4 +8,6 @@ Week 2 - Physical Game Analysis
 
 Week 3 - Digital Game Analysis
 
-Week 4 - Prepering Form for Release
+Week 4 - Prepering Form for Release (Released after deadline with errors, thoughts?)
+
+Week 5 - Started Planning Unit

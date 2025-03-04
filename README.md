@@ -20,4 +20,4 @@ Week 8 - Planning
 
 Week 9 - Planning
 
-Week 10 - PLanning
+Week 10 - Planning

@@ -1,7 +1,6 @@
 # L3GameDev
 Level 3 Game Development Repository for Digital Technologies
 
-
 Week 1 - Physical Game Analysis
 
 Week 2 - Physical Game Analysis
@@ -21,3 +20,5 @@ Week 8 - Planning
 Week 9 - Planning
 
 Week 10 - Planning
+
+

@@ -11,6 +11,9 @@ public class PlayerFunctions : MonoBehaviour
     private GameObject optionsPanelInstance; // Instance of the OptionsPanel
     private GlobalVariables globalVariables;
 
+    public GameObject bulletPrefab; // Reference to the bullet prefab
+    private GameObject bullet;
+
     void Start()
     {
         globalVariables = FindObjectOfType<GlobalVariables>();
@@ -25,6 +28,34 @@ public class PlayerFunctions : MonoBehaviour
 
     void Update()
     {
+        if (Input.GetMouseButtonDown(0))
+        {
+            // Ray from camera to mouse position
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            Vector3 targetDirection;
+
+            if (Physics.Raycast(ray, out RaycastHit hit))
+            {
+                targetDirection = (hit.point - transform.position).normalized;
+            }
+            else
+            {
+                // If nothing is hit, shoot in the direction of the ray
+                targetDirection = (ray.origin + ray.direction * 100f - transform.position).normalized;
+            }
+
+            // Allow shooting in all directions (including up/down)
+            targetDirection = targetDirection.normalized;
+
+            // Set bullet rotation to face the direction (including vertical)
+            Quaternion bulletRotation = Quaternion.LookRotation(targetDirection, Vector3.up);
+
+            bullet = Instantiate(bulletPrefab, transform.position, bulletRotation);
+            Rigidbody bulletRb = bullet.GetComponent<Rigidbody>();
+            bulletRb.AddForce(targetDirection * 100f, ForceMode.Impulse);
+            Destroy(bullet, 2f); // Destroy the bullet after 2 seconds  
+        }
+
         if (Input.GetKeyDown(globalVariables.reload))
         {
             SceneManager.LoadScene(1); // Reload the current scene

@@ -33,7 +33,7 @@ public class GlobalVariables : MonoBehaviour
     public KeyCode moveRight = KeyCode.D;
     public KeyCode jump = KeyCode.Space;
 
-    public KeyCode shoot = KeyCode.Mouse0; // Left mouse button
+    public int shoot = 0; // Left mouse button
     public KeyCode reload = KeyCode.R; // Reload key
     public KeyCode Interact = KeyCode.E; // Interact key
 

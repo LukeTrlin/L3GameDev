@@ -26,10 +26,15 @@ public class PlayerFunctions : MonoBehaviour
         }
     }
 
+    private float fireCooldown = 0.1f;
+    private float lastFireTime = -Mathf.Infinity;
+
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) && Time.time - lastFireTime >= fireCooldown)
         {
+            lastFireTime = Time.time;
+
             // Ray from camera to mouse position
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             Vector3 targetDirection;

@@ -38,9 +38,11 @@ public class GlobalVariables : MonoBehaviour
     public KeyCode Interact = KeyCode.E; // Interact key
 
     public KeyCode pause = KeyCode.Escape; // Pause key
-    
 
 
+    public float TimeTaken = 0.0f;
+
+    public int enemyKills = 0;
 
 
 
@@ -48,6 +50,7 @@ public class GlobalVariables : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        
         DontDestroyOnLoad(gameObject); // Prevents this object from being destroyed when loading a new scene
     }
 

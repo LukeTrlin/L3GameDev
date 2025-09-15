@@ -681,7 +681,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &400042
 Transform:
   m_ObjectHideFlags: 0
@@ -820,7 +820,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 400046}
-  - component: {fileID: 9500000}
   m_Layer: 0
   m_Name: DemoEnemyRanged
   m_TagString: Untagged
@@ -845,27 +844,6 @@ Transform:
   - {fileID: 400042}
   m_Father: {fileID: 400048}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!95 &9500000
-Animator:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 100046}
-  m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: 1e382207f4968e44f9ac243eba23c5ff, type: 3}
-  m_Controller: {fileID: 0}
-  m_CullingMode: 1
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 1
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &100048
 GameObject:
   m_ObjectHideFlags: 0
@@ -880,6 +858,9 @@ GameObject:
   - component: {fileID: 9500002}
   - component: {fileID: 11400004}
   - component: {fileID: 11400002}
+  - component: {fileID: 5659369604045763806}
+  - component: {fileID: 2460078475482131226}
+  - component: {fileID: 8958590540303673713}
   m_Layer: 9
   m_Name: EnemyRanged
   m_TagString: Enemy
@@ -897,7 +878,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -24.161695, y: 0, z: 2.4146063}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 5, y: 5, z: 5}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 400046}
@@ -993,13 +974,15 @@ MonoBehaviour:
     audio_dead_2: {fileID: 8300000, guid: 695ee3dca61504441b8370e666c43931, type: 3}
     audio_melee_attack_1: {fileID: 0}
     audio_melee_attack_2: {fileID: 0}
-  healthPickUpPrefab: {fileID: 0}
+  healthPickUpPrefab: {fileID: 7022371487803078706, guid: e5ab7e88e68c96d459c6e0a3177992ae,
+    type: 3}
   _canDropPickUp: 0
   enemyType: 1
   rangedProjectilePrefab: {fileID: 5400000, guid: be253b20856b13f4f929eccaedac0db3,
     type: 3}
   bloodPrefab: {fileID: 100002, guid: 17ea22ea8413fb448a0d2edccb9329c5, type: 3}
-  specialPrefab: {fileID: 0}
+  specialPrefab: {fileID: 7022371487803078706, guid: e5ab7e88e68c96d459c6e0a3177992ae,
+    type: 3}
 --- !u!114 &11400002
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1041,9 +1024,9 @@ MonoBehaviour:
   jumpDistance: 0
   jumpForce: 0
   longJumpForce: 0
-  followDistance: 10
+  followDistance: 30.9
   wanderDistance: 5
-  attackDistance: 5
+  attackDistance: 15.1
   visionDistance: 50
   avoidDistance: 2
   edgeDistance: 0
@@ -1081,6 +1064,70 @@ MonoBehaviour:
   obstacleLayer:
     serializedVersion: 2
     m_Bits: 0
+--- !u!23 &5659369604045763806
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 100048}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 257
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 73c176f402d2c2f4d929aa5da7585d17, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!33 &2460078475482131226
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 100048}
+  m_Mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &8958590540303673713
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 100048}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7558e7872ebed884da0c6ad052bad2ec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 100
+  damageTaken: 20
 --- !u!1 &100050
 GameObject:
   m_ObjectHideFlags: 0

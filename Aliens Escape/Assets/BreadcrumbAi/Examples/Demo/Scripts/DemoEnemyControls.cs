@@ -61,7 +61,7 @@ public class DemoEnemyControls : MonoBehaviour {
 	
 	private void CheckDeathZone(){
 		if(transform.position.y < -10 || transform.position.y > 10){
-			UpdateEnemyCount();
+			
 		}
 	}
 	
@@ -174,17 +174,11 @@ public class DemoEnemyControls : MonoBehaviour {
 		}
 		yield return new WaitForSeconds(2);
 
-		Invoke("UpdateEnemyCount", 3);
+		
 		_removeBody = true;
 	}
 	
-	void UpdateEnemyCount(){
-		if(enemyType == EnemyType.Special){
-			GameObject.Find("Spawners").GetComponent<DemoSpawnerControl>().specialEnemyCount--;
-		}
-		GameObject.Find("Spawners").GetComponent<DemoSpawnerControl>().enemyCount--;
-		Destroy(gameObject);
-	}
+	
 	
 	void OnCollisionEnter(Collision col){
 		if(col.collider.name.Contains("Bullet")){

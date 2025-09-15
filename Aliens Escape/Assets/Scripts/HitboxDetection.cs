@@ -26,10 +26,14 @@ public class HitboxDetection : MonoBehaviour
 
     public bool isRequired;
 
+    private bool wasHitByBullet = false;
+
 
     public Material powerOnMaterial; // Material to apply when the panel is activated
     public Material powerOffMaterial; // Material to apply when the panel is deactivated
     private GlobalVariables globalVariables;
+
+    public int ActivationTime;
 
     private void Start()
     {
@@ -45,6 +49,11 @@ public class HitboxDetection : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             ActivationCalled = true;
+        }
+
+          if (other.gameObject.CompareTag("bullet"))
+        {
+            wasHitByBullet = true;
         }
     }
 
@@ -71,21 +80,25 @@ public class HitboxDetection : MonoBehaviour
             isActiveByDefault = !isActiveByDefault; // Toggle the state
 
         }
-        
-
-        if (Input.GetKeyDown(globalVariables.Interact) && ActivationCalled && !isDebouncing &&  isButton)
-
+        // Also activate if hit by a bullet
+        if ((Input.GetKeyDown(globalVariables.Interact) && ActivationCalled && !isDebouncing && isButton) ||
+            (isButton && wasHitByBullet && !isDebouncing))
         {
             DebounceTime = 6; // Set debounce time in seconds
             isDebouncing = true;
             StartCoroutine(DebounceActivation(DebounceTime));
-            puzzleObjectInteraction.ButtonToggle(gameObject, powerOnMaterial, powerOffMaterial, Panel, autoTurnnOff);
+            puzzleObjectInteraction.ButtonToggle(gameObject, powerOnMaterial, powerOffMaterial, Panel, autoTurnnOff, ActivationTime);
+            wasHitByBullet = false; // Reset after activation
+        }
+            
             
 
-        }
+        
 
     }
 
+
+ 
 
     IEnumerator DebounceActivation(int DebounceTime) // Cooldown coroutine to prevent rapid activation
     {

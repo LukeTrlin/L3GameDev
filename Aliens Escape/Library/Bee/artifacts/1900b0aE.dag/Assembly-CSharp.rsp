@@ -118,6 +118,7 @@
 -define:ENABLE_TIMELINE
 -define:ENABLE_LEGACY_INPUT_MANAGER
 -define:TEXTCORE_FONT_ENGINE_1_5_OR_NEWER
+-define:PROBUILDER_EXPERIMENTAL_FEATURES
 -define:CSHARP_7_OR_LATER
 -define:CSHARP_7_3_OR_NEWER
 -r:"C:/Program Files/Unity/Hub/Editor/2022.3.21f1/Editor/Data/Managed/UnityEngine/UnityEditor.CoreModule.dll"
@@ -338,6 +339,10 @@
 -r:"Library/Bee/artifacts/1900b0aE.dag/Unity.Mathematics.ref.dll"
 -r:"Library/Bee/artifacts/1900b0aE.dag/Unity.Performance.Profile-Analyzer.Editor.ref.dll"
 -r:"Library/Bee/artifacts/1900b0aE.dag/Unity.PlasticSCM.Editor.ref.dll"
+-r:"Library/Bee/artifacts/1900b0aE.dag/Unity.ProBuilder.AddOns.Editor.ref.dll"
+-r:"Library/Bee/artifacts/1900b0aE.dag/Unity.ProBuilder.AssetIdRemapUtility.ref.dll"
+-r:"Library/Bee/artifacts/1900b0aE.dag/Unity.ProBuilder.Editor.ref.dll"
+-r:"Library/Bee/artifacts/1900b0aE.dag/Unity.ProBuilder.ref.dll"
 -r:"Library/Bee/artifacts/1900b0aE.dag/Unity.RenderPipelines.Core.Editor.ref.dll"
 -r:"Library/Bee/artifacts/1900b0aE.dag/Unity.RenderPipelines.Core.Runtime.ref.dll"
 -r:"Library/Bee/artifacts/1900b0aE.dag/Unity.RenderPipelines.Core.ShaderLibrary.ref.dll"
@@ -389,6 +394,7 @@
 "Assets/BreadcrumbAi/Examples/Demo/Scripts/DemoSpawnerControl.cs"
 "Assets/BreadcrumbAi/Examples/Demo/Scripts/DemoTidyBullets.cs"
 "Assets/BreadcrumbAi/Examples/Demo/Scripts/DemoTidySpit.cs"
+"Assets/ChangeText.cs"
 "Assets/Misc/HDpacks/TutorialInfo/Scripts/Readme.cs"
 "Assets/Misc/TextMesh Pro/Examples & Extras/Scripts/Benchmark01.cs"
 "Assets/Misc/TextMesh Pro/Examples & Extras/Scripts/Benchmark01_UGUI.cs"
@@ -424,10 +430,13 @@
 "Assets/Misc/TextMesh Pro/Examples & Extras/Scripts/VertexShakeB.cs"
 "Assets/Misc/TextMesh Pro/Examples & Extras/Scripts/VertexZoom.cs"
 "Assets/Misc/TextMesh Pro/Examples & Extras/Scripts/WarpTextExample.cs"
+"Assets/Scripts/AsyncLoader.cs"
+"Assets/Scripts/BulletLogic.cs"
 "Assets/Scripts/ButtonLogic.cs"
 "Assets/Scripts/CamMove.cs"
 "Assets/Scripts/EndScreen.cs"
 "Assets/Scripts/EndScreenAnimation.cs"
+"Assets/Scripts/EndScreenScoreCalculation.cs"
 "Assets/Scripts/EnemyAI.cs"
 "Assets/Scripts/Global Variables.cs"
 "Assets/Scripts/HealthManager.cs"

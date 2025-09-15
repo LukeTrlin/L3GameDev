@@ -20,10 +20,7 @@ public class Puzzleobjectinteraction : MonoBehaviour
     public Material powered;
     public Material unpowered;
 
-
-
-
-
+    public Animator doorAnimator; // Add this reference for the Animator
 
     public GameObject[] roomLevers;
     public GameObject[] roomButtons;
@@ -37,15 +34,9 @@ public class Puzzleobjectinteraction : MonoBehaviour
 
     private bool continueChecking = true;
 
-
-
-
-
     // Start is called before the first frame update
     void Start()
     {
-
-
         roomLevers = new GameObject[LeversHolder.transform.childCount];
         for (int i = 0; i < LeversHolder.transform.childCount; i++)
         {
@@ -63,8 +54,6 @@ public class Puzzleobjectinteraction : MonoBehaviour
         {
             roomPressure[i] = PressureHolder.transform.GetChild(i).gameObject;
         }
-
-
 
         roomControlPanels = new GameObject[roomLevers.Length + roomButtons.Length + roomPressure.Length];
 
@@ -88,8 +77,7 @@ public class Puzzleobjectinteraction : MonoBehaviour
             roomControlPanels[index++] = roomPressure[i].transform.Find("ActivationPanel").gameObject;
         }
 
-
-
+        // Get the Animator component from the RoomDoor if not assigned
     }
 
 
@@ -117,7 +105,7 @@ public class Puzzleobjectinteraction : MonoBehaviour
 
 
 
-    public void ButtonToggle(GameObject button, Material wireMaterial, Material wireOffMaterial, GameObject Panel, bool autoTurnOff)
+    public void ButtonToggle(GameObject button, Material wireMaterial, Material wireOffMaterial, GameObject Panel, bool autoTurnOff, int TimeWait)
 
     {
 
@@ -125,7 +113,7 @@ public class Puzzleobjectinteraction : MonoBehaviour
         button.transform.Find("ButtonOn").gameObject.SetActive(true);
 
         StartCoroutine(ActivateWires(button.transform.Find("Wiring").gameObject, wireMaterial, Panel, 0));
-        StartCoroutine(ActivateWires(button.transform.Find("Wiring").gameObject, wireOffMaterial, Panel, 4));
+        StartCoroutine(ActivateWires(button.transform.Find("Wiring").gameObject, wireOffMaterial, Panel, TimeWait));
         StartCoroutine(AutoTurnOff(2, button.transform.Find("ButtonOn").gameObject, button.transform.Find("ButtonOff").gameObject));
         
 
@@ -174,82 +162,48 @@ public class Puzzleobjectinteraction : MonoBehaviour
     }
 
     private void DetectActivePanels()
+{
+    allPowered = true; // assume everything is powered
+
+    for (int i = 0; i < roomControlPanels.Length; i++)
     {
-
-        for (int i = 0; i < roomControlPanels.Length; i++)
+        if (roomControlPanels[i] != null && roomControlPanels[i].GetComponent<Renderer>() != null)
         {
-            if (roomControlPanels[i] != null && roomControlPanels[i].GetComponent<Renderer>() != null && continueChecking)
+            if (!roomControlPanels[i].GetComponent<PanelValues>().isActive)
             {
-                if (roomControlPanels[i].GetComponent<PanelValues>().isActive == false)
-                {
-                    allPowered = false;
-                    continueChecking = false; // If any panel is inactive, set continueChecking to false
-                }
-
-
-                if (roomControlPanels[i].GetComponent<PanelValues>().isActive == true && i == roomControlPanels.Length - 1)
-                {
-                    allPowered = true; // If all panels are active, set allPowered to true
-                    Debug.Log("All panels checked. All powered: " + allPowered);
-                }
-                else
-                {
-                    
-                    allPowered = false; // If any panel is inactive, set allPowered to false
-                    
-                }
-
-
-
-
-
-
-
-
-
-
-
+                allPowered = false; 
+                break; // stop early, no need to keep checking
             }
-
-
-        }
-        
-        continueChecking = true; // Reset continueChecking for the next update
-    
-       
-    }
-
-    public void Update()
-    {
-
-
-        if (allPowered)
-        {
-            Debug.Log("All activation panels are powered on.");
-
-            for (int i = 0; i < gameObject.transform.Find("ControlPanel").gameObject.transform.Find("Wiring").gameObject.transform.childCount; i++)
-            {
-                gameObject.transform.Find("ControlPanel").gameObject.transform.Find("Wiring").gameObject.transform.GetChild(i).GetComponent<Renderer>().material = powered;
-            }
-            RoomDoor.SetActive(false);
-            // All activation panels are powered on
-            // Place your logic here (e.g., open the door)
-        }
-        else
-        {
-
-            for (int i = 0; i < gameObject.transform.Find("ControlPanel").gameObject.transform.Find("Wiring").gameObject.transform.childCount; i++)
-            {
-                gameObject.transform.Find("ControlPanel").gameObject.transform.Find("Wiring").gameObject.transform.GetChild(i).GetComponent<Renderer>().material = unpowered;
-            }
-                  RoomDoor.SetActive(true);
-            // Not all activation panels are powered on
-            // Place your logic here (e.g., keep the door closed)
         }
     }
+}
+    private bool doorOpened = false;
 
+public void Update()
+{
+    if (allPowered && !doorOpened)
+    {
+        // Play open animation
+        doorAnimator.Play("Open");
+        doorOpened = true;
 
+        // Set powered wires
+        for (int i = 0; i < gameObject.transform.Find("ControlPanel").Find("Wiring").childCount; i++)
+        {
+            gameObject.transform.Find("ControlPanel").Find("Wiring").GetChild(i).GetComponent<Renderer>().material = powered;
+        }
+    }
+    else if (!allPowered && doorOpened)
+    {
+        // Play close animation
+        doorAnimator.Play("Close");
+        doorOpened = false;
 
-
-
+        // Set unpowered wires
+        for (int i = 0; i < gameObject.transform.Find("ControlPanel").Find("Wiring").childCount; i++)
+        {
+            gameObject.transform.Find("ControlPanel").Find("Wiring").GetChild(i).GetComponent<Renderer>().material = unpowered;
+        }
+    }
+}
 }

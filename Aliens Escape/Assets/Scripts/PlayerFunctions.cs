@@ -14,10 +14,12 @@ public class PlayerFunctions : MonoBehaviour
     public GameObject bulletPrefab; // Reference to the bullet prefab
     private GameObject bullet;
 
+    private int currentAmmo;
+
     void Start()
     {
         globalVariables = FindObjectOfType<GlobalVariables>();
-
+        currentAmmo = globalVariables.currentAmmo;
         // Instantiate the OptionsPanel prefab and deactivate it initially
         if (OptionsPanelPrefab != null)
         {
@@ -31,10 +33,12 @@ public class PlayerFunctions : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetMouseButtonDown(0) && Time.time - lastFireTime >= fireCooldown)
+        if (Input.GetMouseButtonDown(0) && Time.time - lastFireTime >= fireCooldown && currentAmmo > 0)
         {
             lastFireTime = Time.time;
-
+            currentAmmo -= 1;
+            globalVariables.playerMaxAmmo -= 1;
+            globalVariables.currentAmmo -= 1;
             // Ray from camera to mouse position
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             Vector3 targetDirection;
@@ -61,9 +65,15 @@ public class PlayerFunctions : MonoBehaviour
             Destroy(bullet, 2f); // Destroy the bullet after 2 seconds  
         }
 
-        if (Input.GetKeyDown(globalVariables.reload))
+        if (Input.GetKeyDown(globalVariables.reload) && globalVariables.playerMaxAmmo >= 30)
         {
-            SceneManager.LoadScene(1); // Reload the current scene
+            currentAmmo = 30;
+            globalVariables.currentAmmo = 30;
+        }
+        else if (Input.GetKeyDown(globalVariables.reload) && globalVariables.playerMaxAmmo < 30)
+        {
+            currentAmmo = globalVariables.playerMaxAmmo;
+            globalVariables.currentAmmo = currentAmmo;
         }
 
         if (Input.GetKeyDown(globalVariables.pause) && optionsPanelInstance != null)

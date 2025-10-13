@@ -21,7 +21,7 @@ public class GlobalVariables : MonoBehaviour
     public int playerHealth = 100; // Default health value
     public int playerGunDamage = 20; // Default gun damage value
 
-    public int playerAmmo = 30; // Default ammo count
+    public int currentAmmo = 30; // Default ammo count
     public int playerMaxAmmo = 90; // Default max ammo count
     public int playerMeleeDamage = 10; // Default melee damage value
 

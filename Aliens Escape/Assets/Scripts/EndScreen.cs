@@ -41,7 +41,7 @@ public class EndScreen : MonoBehaviour
     {
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
-        SceneManager.LoadScene(2);
+        SceneManager.LoadScene("EndgameScene");
         // Implement your logic to show the end screen
     }
 
@@ -50,10 +50,10 @@ public class EndScreen : MonoBehaviour
         float lastTime = Time.time;
         while (measureTime)
         {
-            yield return null;
             float currentTime = Time.time;
             globalVariables.TimeTaken += currentTime - lastTime;
             lastTime = currentTime;
+            yield return null; // Yield each frame
         }
     }
 }

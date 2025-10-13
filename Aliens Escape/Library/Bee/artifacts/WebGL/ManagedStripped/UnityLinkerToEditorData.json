@@ -281,8 +281,7 @@
           {
             "name": "Light",
             "scenes": [
-              "Assets/Scenes/BaseGame/BaseGame.unity",
-              "Assets/Scenes/EndgameScene.unity"
+              "Assets/Scenes/BaseGame/BaseGame.unity"
             ],
             "dependencyType": 0,
             "icon": null
@@ -855,14 +854,6 @@
             "name": "Collider",
             "scenes": [],
             "dependencyType": 1,
-            "icon": null
-          },
-          {
-            "name": "MeshCollider",
-            "scenes": [
-              "Assets/Scenes/BaseGame/BaseGame.unity"
-            ],
-            "dependencyType": 0,
             "icon": null
           },
           {

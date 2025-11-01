@@ -17,6 +17,7 @@ public class GlobalVariables : MonoBehaviour
 
 
     [Header("Player Stats")]
+    public string PlayerName = "";
     public int playerScore = 0;
     public int playerHealth = 100; // Default health value
     public int playerGunDamage = 20; // Default gun damage value

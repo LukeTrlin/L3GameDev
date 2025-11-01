@@ -5,6 +5,7 @@ using TMPro;
 
 public class ChangeText : MonoBehaviour
 {
+    
     public TextMeshProUGUI Timetext;
     public TextMeshProUGUI Killstext;
     public TextMeshProUGUI Ammotext;

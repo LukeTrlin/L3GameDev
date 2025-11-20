@@ -12,6 +12,8 @@ TagManager:
   - Enemy
   - Breadcrumb
   - bullet
+  - EnemyAttack
+  - OptionsMenu
   layers:
   - Default
   - TransparentFX

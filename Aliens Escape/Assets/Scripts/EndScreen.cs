@@ -1,59 +1,86 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-
+using UnityEngine.SceneManagement; // Needed for scene loading
 public class EndScreen : MonoBehaviour
 {
-    public GameObject triggerPlatform;
-
+    public static EndScreen instance;
 
     private GlobalVariables globalVariables;
+    private bool measureTime = false;
+    private Coroutine timerCoroutine;
 
-    private bool measureTime = true;
-
-    // Start is called before the first frame update
-    void Awake()
+    private void Awake()
     {
+        // Singleton pattern: prevent duplicates
+        if (instance != null && instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        instance = this;
+        
+
         globalVariables = FindObjectOfType<GlobalVariables>();
-        measureTime = true;
-        StartCoroutine("Timer");
-       
+
+        if (globalVariables.TimeTaken <= 0f)
+            globalVariables.TimeTaken = 0f;
+
+        StartTimer();
     }
 
-    // Update is called once per frame
-    void Update()
+    private void StartTimer()
     {
+        if (timerCoroutine == null)
+        {
+            measureTime = true;
+            timerCoroutine = StartCoroutine(Timer());
+        }
+    }
 
+    private void StopTimer()
+    {
+        measureTime = false;
+        if (timerCoroutine != null)
+        {
+            StopCoroutine(timerCoroutine);
+            timerCoroutine = null;
+        }
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-            measureTime = false;
-            Debug.Log("End screen triggered");
+            StopTimer();
+            
             ShowEndScreen();
         }
     }
 
+   
     private void ShowEndScreen()
     {
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
         SceneManager.LoadScene("EndgameScene");
-        // Implement your logic to show the end screen
     }
 
-    public IEnumerator Timer()
+    private IEnumerator Timer()
     {
-        float lastTime = Time.time;
         while (measureTime)
         {
-            float currentTime = Time.time;
-            globalVariables.TimeTaken += currentTime - lastTime;
-            lastTime = currentTime;
-            yield return null; // Yield each frame
+            globalVariables.TimeTaken += Time.deltaTime;
+            yield return null;
         }
     }
+
+    public void ResetAndStartTimer()
+{
+    StopTimer(); // stop any old timer just in case
+    globalVariables.TimeTaken = 0f;
+    StartTimer();
+}
+
+    
 }

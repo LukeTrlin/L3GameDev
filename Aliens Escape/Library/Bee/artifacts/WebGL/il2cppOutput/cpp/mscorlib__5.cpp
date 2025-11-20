@@ -4307,6 +4307,8 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR String_t* Environment_internalGetHome_m2F6E38
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR String_t* Environment_ReadXdgUserDir_m18BBF24A0F837597D43473FEF81CA4D8EF39D1F9 (String_t* ___0_config_dir, String_t* ___1_home_dir, String_t* ___2_key, String_t* ___3_fallback, const RuntimeMethod* method) ;
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR String_t* Path_Combine_mA07781A88C6F9067A942D5C11B9703DA8518E4C3 (String_t* ___0_path1, String_t* ___1_path2, String_t* ___2_path3, const RuntimeMethod* method) ;
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void Environment_FailFast_m8627BA6E457D87F2CEDF955294FC6AE7A08E0860 (String_t* ___0_message, Exception_t* ___1_exception, String_t* ___2_errorSource, const RuntimeMethod* method) ;
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR bool Environment_GetIs64BitOperatingSystem_mEE383B803FAD1DD008C0876A176247F87D5C7948 (const RuntimeMethod* method) ;
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR int32_t IntPtr_get_Size_m1FAAA59DA73D7E32BB1AB55DD92A90AFE3251DBE (const RuntimeMethod* method) ;
 IL2CPP_EXTERN_C IL2CPP_NO_INLINE IL2CPP_METHOD_ATTR void StackTrace__ctor_m269D00E49783BC3205FD5C7E879888884D72107C (StackTrace_t7C150C7C14136F985311A83A93524B1019F70853* __this, bool ___0_fNeedFileInfo, const RuntimeMethod* method) ;
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR String_t* StackTrace_ToString_m8732EDFFAFD39EA9E34978B7563D19BD70CD8627 (StackTrace_t7C150C7C14136F985311A83A93524B1019F70853* __this, int32_t ___0_traceFormat, const RuntimeMethod* method) ;
 inline void List_1_AddWithResize_m79A9BF770BEF9C06BE40D5401E55E375F2726CC4 (List_1_tA239CB83DE5615F348BB0507E45F490F4F7C9A8D* __this, RuntimeObject* ___0_item, const RuntimeMethod* method)
@@ -29022,6 +29024,28 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void Environment_FailFast_m8627BA6E457D87F2CE
 	typedef void (*Environment_FailFast_m8627BA6E457D87F2CEDF955294FC6AE7A08E0860_ftn) (String_t*, Exception_t*, String_t*);
 	using namespace il2cpp::icalls;
 	((Environment_FailFast_m8627BA6E457D87F2CEDF955294FC6AE7A08E0860_ftn)mscorlib::System::Environment::FailFast) (___0_message, ___1_exception, ___2_errorSource);
+}
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR bool Environment_GetIs64BitOperatingSystem_mEE383B803FAD1DD008C0876A176247F87D5C7948 (const RuntimeMethod* method) 
+{
+	typedef bool (*Environment_GetIs64BitOperatingSystem_mEE383B803FAD1DD008C0876A176247F87D5C7948_ftn) ();
+	using namespace il2cpp::icalls;
+	return ((Environment_GetIs64BitOperatingSystem_mEE383B803FAD1DD008C0876A176247F87D5C7948_ftn)mscorlib::System::Environment::GetIs64BitOperatingSystem) ();
+}
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR bool Environment_get_Is64BitOperatingSystem_mA5C541BD96D402E1422D5337AD49B26BB1FF4674 (const RuntimeMethod* method) 
+{
+	{
+		bool L_0;
+		L_0 = Environment_GetIs64BitOperatingSystem_mEE383B803FAD1DD008C0876A176247F87D5C7948(NULL);
+		return L_0;
+	}
+}
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR bool Environment_get_Is64BitProcess_mF33E8476A91E765170A91B146EC1337C6779F6A1 (const RuntimeMethod* method) 
+{
+	{
+		int32_t L_0;
+		L_0 = IntPtr_get_Size_m1FAAA59DA73D7E32BB1AB55DD92A90AFE3251DBE(NULL);
+		return (bool)((((int32_t)L_0) == ((int32_t)8))? 1 : 0);
+	}
 }
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR int32_t Environment_get_ProcessorCount_mDAC34132B9E3B90121F37673DF78F13FCB9497AC (const RuntimeMethod* method) 
 {

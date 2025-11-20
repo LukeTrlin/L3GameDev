@@ -8,6 +8,7 @@ using UnityEditor;
 public class UploadScore : MonoBehaviour
 {
     public TextMeshProUGUI nameText;
+    public TextMeshProUGUI statusText;  
     public string playerName;
 
     private GlobalVariables globalVariables;
@@ -28,70 +29,106 @@ public class UploadScore : MonoBehaviour
     void Update()
     {
         if (nameText != null)
-        {
             UpdatePlayerName();
-        }
     }
 
     private void UpdatePlayerName()
     {
-        // Clean up invisible or non-breaking characters
-        string cleanedName = (nameText.text ?? string.Empty)
-            .Replace("\u200B", "")   // zero-width space
-            .Replace("\u00A0", "")   // non-breaking space
-            .Trim();
-
+        string cleanedName = CleanName(nameText.text);
         playerName = cleanedName;
 
         if (globalVariables != null)
             globalVariables.PlayerName = cleanedName;
-
-        Debug.Log($"Raw nameText.text='{nameText.text}' (Length={nameText.text.Length}) | Cleaned='{cleanedName}'");
     }
 
+    // ------------------------------------------
+    // CLEAN STRING HELPER
+    // ------------------------------------------
+    private string CleanName(string input)
+    {
+        return (input ?? string.Empty)
+            .Replace("\u200B", "")   // zero-width space
+            .Replace("\u00A0", "")   // non-breaking space
+            .Trim();
+    }
+
+    // ------------------------------------------
+    // UPLOAD SCORE
+    // ------------------------------------------
     public void UploadScoreToLeaderboard()
     {
-        if (nameText == null)
-        {
-            Debug.LogWarning("Cannot upload score: nameText reference is not assigned.");
-            return;
-        }
+        string finalPlayerName = CleanName(nameText.text);
 
-        // Clean again before saving
-        string finalPlayerName = (nameText.text ?? string.Empty)
-            .Replace("\u200B", "")
-            .Replace("\u00A0", "")
-            .Trim();
-
+        // -------------------------
+        // VALIDATION: EMPTY NAME
+        // -------------------------
         if (string.IsNullOrEmpty(finalPlayerName))
         {
-            Debug.LogWarning("Cannot upload score: player name is empty or invalid.");
+            Debug.LogWarning("Cannot upload score: name is empty.");
+            SetStatus("❌ Name cannot be empty!");
             return;
         }
 
         float timeValue = globalVariables != null ? globalVariables.TimeTaken : 0f;
-        if (globalVariables == null)
-            Debug.LogWarning("GlobalVariables not found. TimeTaken is assumed 0.");
+
+        // -------------------------
+        // PICK FILE BY DIFFICULTY
+        // -------------------------
+        string difficultyFile = GetDifficultyFile();
 
         string dir = Path.Combine(Application.dataPath, "TextFiles");
         if (!Directory.Exists(dir))
             Directory.CreateDirectory(dir);
 
-        string path = Path.Combine(dir, "Leaderboard.txt");
+        string path = Path.Combine(dir, difficultyFile);
 
         try
         {
-            string line = $"{finalPlayerName} {timeValue:F2}";
+            string line = $"{finalPlayerName},{timeValue:F2}";
             File.AppendAllText(path, line + System.Environment.NewLine);
-            Debug.Log($"Leaderboard: saved {finalPlayerName} {timeValue:F2} to {path}");
 
-    #if UNITY_EDITOR
+            Debug.Log($"Saved {line} to {path}");
+            SetStatus("✅ Score uploaded!");
+
+#if UNITY_EDITOR
             AssetDatabase.Refresh();
-    #endif
+#endif
         }
         catch (System.Exception ex)
         {
             Debug.LogError($"Failed to write leaderboard file: {ex}");
+            SetStatus("❌ Upload failed! Check console.");
         }
+    }
+
+    // ------------------------------------------
+    // SELECT FILE FOR DIFFICULTY
+    // ------------------------------------------
+    private string GetDifficultyFile()
+    {
+        if (globalVariables == null)
+        {
+            Debug.LogWarning("GlobalVariables not found!");
+            return "Leaderboard_Unknown.txt";
+        }
+
+        switch (globalVariables.difficultyLevel)
+        {
+            case 1: return "Leaderboard_Easy.txt";
+            case 2: return "Leaderboard_Medium.txt";
+            case 3: return "Leaderboard_Hard.txt";
+            default:
+                Debug.LogWarning("Invalid difficulty level!");
+                return "Leaderboard_Unknown.txt";
+        }
+    }
+
+    // ------------------------------------------
+    // UPDATE UI STATUS TEXT
+    // ------------------------------------------
+    private void SetStatus(string message)
+    {
+        if (statusText != null)
+            statusText.text = message;
     }
 }

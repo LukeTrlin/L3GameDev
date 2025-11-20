@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class HitboxDetection : MonoBehaviour
 {
+    public MusicController musicController; // Cached MusicController instance
     public GameObject RoomManager; // Reference to the RoomManager GameObject that contains the Puzzleobjectinteraction component
 
     public GameObject Panel; // Panel to be activated or deactivated
@@ -37,11 +38,17 @@ public class HitboxDetection : MonoBehaviour
 
     private void Start()
     {
+         musicController = FindObjectOfType<MusicController>();
+        if (musicController == null)
+        {
+      
+        }
+         
         globalVariables = FindObjectOfType<GlobalVariables>();
         if (RoomManager != null)
         {
             puzzleObjectInteraction = RoomManager.GetComponent<Puzzleobjectinteraction>(); // Locate the Puzzleobjectinteraction component in the RoomManager GameObject
-            Debug.Log("PuzzleObjectInteraction component found in RoomManager.");
+          
         }
     }
     private void OnTriggerEnter(Collider other)
@@ -73,6 +80,10 @@ public class HitboxDetection : MonoBehaviour
         if (Input.GetKeyDown(globalVariables.Interact) && ActivationCalled && !isDebouncing && isLever)
 
         {
+        
+            musicController.PlayInteractSound();
+            
+                
             DebounceTime = 1; // Set debounce time in seconds
             isDebouncing = true;
             StartCoroutine(DebounceActivation(DebounceTime));
@@ -84,6 +95,7 @@ public class HitboxDetection : MonoBehaviour
         if ((Input.GetKeyDown(globalVariables.Interact) && ActivationCalled && !isDebouncing && isButton) ||
             (isButton && wasHitByBullet && !isDebouncing))
         {
+            musicController.PlayInteractSound();
             DebounceTime = 6; // Set debounce time in seconds
             isDebouncing = true;
             StartCoroutine(DebounceActivation(DebounceTime));

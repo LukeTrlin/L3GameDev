@@ -8,7 +8,7 @@ public class GlobalVariables : MonoBehaviour
     [Header("Global Variables")]
 
     [Header("Game Settings")]
-    public int difficultyLevel = 0; // 0: Easy, 1: Medium, 2: Hard
+    public float difficultyLevel = 0; // 0: Easy, 1: Medium, 2: Hard
     public bool isSoundEnabled = true; // Sound effects enabled by default
     public bool isMusicEnabled = true; // Music enabled by default
 
@@ -20,6 +20,8 @@ public class GlobalVariables : MonoBehaviour
     public string PlayerName = "";
     public int playerScore = 0;
     public int playerHealth = 100; // Default health value
+
+    public float currentHealth = 100;
     public int playerGunDamage = 20; // Default gun damage value
 
     public int currentAmmo = 30; // Default ammo count
@@ -40,20 +42,32 @@ public class GlobalVariables : MonoBehaviour
 
     public KeyCode pause = KeyCode.Escape; // Pause key
 
+    public float enemyHealth = 50;
 
     public float TimeTaken = 0.0f;
 
     public int enemyKills = 0;
 
+    public int TimesDied = 0;
+
+    public bool isOptionsOpen = false;
 
 
+    private bool hasBeenSaved = false;
 
+    private static GlobalVariables instance;
     // Start is called before the first frame update
-    void Start()
+    void Awake()
+{
+    if (instance != null && instance != this)
     {
-        
-        DontDestroyOnLoad(gameObject); // Prevents this object from being destroyed when loading a new scene
+        Destroy(gameObject); // Destroy duplicate
+        return;
     }
+
+    instance = this;
+    DontDestroyOnLoad(gameObject);
+}
 
     // Update is called once per frame
     void Update()

@@ -37,7 +37,7 @@ public class EnemyAI : MonoBehaviour
         {
 
             globalVariables.enemyKills += 1;
-            Debug.Log("Killed");
+          
             Destroy(gameObject);
 
 
